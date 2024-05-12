@@ -1,0 +1,17 @@
+{
+  "name": "enct",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A proprietary encrypted text and JSON file format encoder/decoder CLI written in C#.",
+  "homepage": "https://github.com/ruggeryiury/enct#readme",
+  "repository": "github:ruggeryiury/enct",
+  "author": "Ruggery Iury Corrêa <ruggeryiury@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "Microsoft.NET.Sdk": "8.0.203"
+  },
+  "scripts": {
+    "run": "dotnet run --project ENCT",
+    "build": "dotnet build"
+  }
+}
