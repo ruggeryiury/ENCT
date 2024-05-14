@@ -8,10 +8,11 @@ namespace ENCT
   {
     public static void Main(string[] args)
     {
-      Parser.Default.ParseArguments<EnctEncryptOptions, EnctDecryptOptions>(args)
+      Parser.Default.ParseArguments<EnctEncryptOptions, EnctDecryptOptions, EnctHeaderOptions>(args)
       .MapResult(
         (EnctEncryptOptions options) => EnctCore.Encryptor(options),
         (EnctDecryptOptions options) => EnctCore.Decryptor(options),
+        (EnctHeaderOptions options) => EnctCore.Header(options),
         errors => 1
       );
     }

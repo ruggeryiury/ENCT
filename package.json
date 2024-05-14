@@ -11,7 +11,7 @@
     "Microsoft.NET.Sdk": "8.0.203"
   },
   "scripts": {
-    "run": "dotnet run --project ENCT",
+    "dev": "dotnet run --project ENCT",
     "build": "dotnet build"
   }
 }

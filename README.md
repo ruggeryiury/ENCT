@@ -10,9 +10,58 @@
 <img src='https://img.shields.io/github/last-commit/ruggeryiury/enct?color=%23DDD&style=for-the-badge' /> <img src='https://img.shields.io/github/repo-size/ruggeryiury/enct?style=for-the-badge' /> <img src='https://img.shields.io/github/issues/ruggeryiury/enct?style=for-the-badge' /> <img src='https://img.shields.io/github/package-json/v/ruggeryiury/enct?style=for-the-badge' /> <img src='https://img.shields.io/github/license/ruggeryiury/enct?style=for-the-badge' />
 </div>
 
-ENCT files (**Enc**rypted **T**ext file) has a file extension of `.enct` and it's used to store sensitive data using AES encryption.
+- [About](#about)
+- [CLI Usage](#cli-usage)
+  - [`encrypt`](#encrypt)
+  - [`decrypt`](#decrypt)
+  - [`header`](#header)
+- [File format specifications](#file-format-specifications)
+  - [Header](#header-1)
 
-## File header
+
+# About
+
+`ENCT` is a CLI program project that encrypts and decrypts text or JSON files to a proprietary file format using AES encryption.
+
+ENCT files (**Enc**rypted **T**ext file) has a file extension of `.enct` and it's used to store any sensitive data.
+
+# CLI Usage
+
+## `encrypt`
+
+Encrypt a text or JSON file.
+
+- `-i` `--input`: The source file to be encrypted.
+- `-k` `--key`: A 16 characters encryption key.
+
+```bat
+enct.exe encrypt -i "any-text-file.txt" -k 101010101010
+```
+
+## `decrypt`
+
+Decrypt a ENCT file.
+
+- `-i` `--input`: The ENCT file to be decrypted.
+- `-k` `--key`: A 16 characters encryption key.
+
+```bat
+enct.exe decrypt -i "any-enct-file.enct" -k 101010101010
+```
+
+## `header`
+
+Parses a ENCT file header.
+
+- `-i` `--input`: The ENCT file to parse its header.
+
+```bat
+enct.exe header -i "any-text-file.txt"
+```
+
+# File format specifications
+
+## Header
 
 An ENCT file has a fixed header of `0x50` bytes length.
 

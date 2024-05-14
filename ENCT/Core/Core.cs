@@ -20,7 +20,7 @@ namespace ENCT.Core
     /// <returns></returns>
     public static int Encryptor(EnctEncryptOptions options)
     {
-      string srcPath = options.Src.ToArray()[0];
+      string srcPath = options.Input;
 
       // Throw ArgumentException if the provided file doesn't exist
       if (!Path.Exists(srcPath))
@@ -62,7 +62,7 @@ namespace ENCT.Core
 
     public static int Decryptor(EnctDecryptOptions options)
     {
-      string srcPath = options.Src.ToArray()[0];
+      string srcPath = options.Input;
 
       if (!Path.Exists(srcPath))
       {
@@ -97,6 +97,39 @@ namespace ENCT.Core
       string decContentHashHex = EnctUtilities.ByteArrayToHexString(EnctUtilities.CreateSHA256Hash(Encoding.UTF8.GetBytes(newContents)));
       Console.WriteLine("ENCT file hash: {0}", srcFileHash);
       Console.WriteLine("Decrypted hash (from content): {0}", decContentHashHex);
+
+      return 0;
+    }
+
+    public static int Header(EnctHeaderOptions options)
+    {
+      string srcPath = options.Input;
+
+      if (!Path.Exists(srcPath))
+      {
+        throw new ArgumentException($"Provided path \"{srcPath}\" doesn't exist.");
+      }
+
+      byte[] enct = File.ReadAllBytes(srcPath);
+      ENCTParsedHeaderStruct header = EnctV1.ParseHeader(enct);
+      string sourceFileType = "TXT";
+      switch (header.SourceFileType)
+      {
+        case 1:
+          sourceFileType = "JSON";
+          break;
+        default:
+          break;
+      }
+
+      Console.WriteLine($"Header from file \"{srcPath}\":\n");
+      Console.WriteLine($"FileVersion: {header.FileVersion}");
+      Console.WriteLine($"CreationDate: {header.CreationDate}");
+      Console.WriteLine($"CreationTime: {header.CreationTime}");
+      Console.WriteLine($"SourceFileContentSize: {header.SourceFileContentSize} bytes");
+      Console.WriteLine($"SourceFileType: Type {header.SourceFileType} ({sourceFileType})");
+      Console.WriteLine($"IV: {BitConverter.ToString(EnctUtilities.SwapIVBytes(header.IV)).Replace("-", "").ToLower()}");
+      Console.WriteLine($"SourceFileHash: sha256-{BitConverter.ToString(header.SourceFileHash).Replace("-", "").ToLower()}");
 
       return 0;
     }
