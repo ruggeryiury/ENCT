@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using ENCT.Structures;
@@ -20,18 +19,18 @@ namespace ENCT.V1
     /// <returns>The file header as a byte array.</returns>
     public static byte[] GenerateHeader(string srcContents, byte[] swappedIV, string srcExt, byte[] srcHash, int fileVersion = 1)
     {
-      MemoryStream mStream = new MemoryStream();
-      BinaryWriter bw = new BinaryWriter(mStream);
-      DateTime now = DateTime.Now;
-      UInt16 srcFile;
+      var mStream = new MemoryStream();
+      var bw = new BinaryWriter(mStream);
+      var now = DateTime.Now;
+      ushort srcFile;
 
-      if (srcExt == ".txt") srcFile = (UInt16)0;
-      else srcFile = (UInt16)1;
+      if (srcExt == ".txt") srcFile = (ushort)0;
+      else srcFile = (ushort)1;
 
       ENCTHeaderStruct header = new ENCTHeaderStruct
       {
         Magic = "ENCT",
-        FileVersion = (UInt16)fileVersion,
+        FileVersion = (ushort)fileVersion,
         CreationDate = now.ToString("yyyy-MM-dd"),
         CreationTime = now.ToString("HH:mm:ss"),
         SourceFileContentSize = (UInt32)srcContents.Length,
@@ -54,7 +53,7 @@ namespace ENCT.V1
 
     public static ENCTParsedHeaderStruct ParseHeader(byte[] enct)
     {
-      ENCTParsedHeaderStruct header = new ENCTParsedHeaderStruct
+      var header = new ENCTParsedHeaderStruct
       {
         Magic = Encoding.ASCII.GetString(EnctUtilities.ReadBytesAsSequence(enct, 0x0, 0x4)),
         FileVersion = BitConverter.ToUInt16(EnctUtilities.ReadBytesAsSequence(enct, 0x4, 0x2)),
@@ -78,12 +77,12 @@ namespace ENCT.V1
     {
       byte[] encContents;
 
-      ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+      var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
 
-      using (MemoryStream msEncrypt = new MemoryStream())
+      using (var msEncrypt = new MemoryStream())
       {
-        using CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
-        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+        using var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
+        using (var swEncrypt = new StreamWriter(csEncrypt))
         {
           // Write all data to the stream
           swEncrypt.Write(srcContents);
@@ -98,16 +97,16 @@ namespace ENCT.V1
     public static byte[] DecryptV1(byte[] encContents, byte[] key, byte[] iv)
     {
       byte[] decContentBytes = null;
-      using (Aes aesAlg = Aes.Create())
+      using (var aesAlg = Aes.Create())
       {
         aesAlg.Key = key;
         aesAlg.IV = iv;
 
-        ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+        var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
-        using MemoryStream ms = new MemoryStream(encContents);
-        using CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
-        using StreamReader sr = new StreamReader(cs);
+        using var ms = new MemoryStream(encContents);
+        using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
+        using var sr = new StreamReader(cs);
         decContentBytes = Encoding.UTF8.GetBytes(sr.ReadToEnd());
       }
 

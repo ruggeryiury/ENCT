@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -24,7 +23,7 @@ namespace ENCT.Utilities
     /// <returns>The swapped initialization vector as a byte array.</returns>
     public static byte[] SwapIVBytes(byte[] iv)
     {
-      byte[] swapped = new byte[iv.Length];
+      var swapped = new byte[iv.Length];
 
       for (int i = 0; i < iv.Length; i += 2)
       {
@@ -45,7 +44,7 @@ namespace ENCT.Utilities
     /// <returns>A byte array of the bytes from the provided offset start with the provided length.</returns>
     public static byte[] ReadBytesAsSequence(byte[] buffer, int offset, int length)
     {
-      byte[] extractedBytes = new byte[length];
+      var extractedBytes = new byte[length];
       Array.Copy(buffer, offset, extractedBytes, 0, length);
       return extractedBytes;
     }
@@ -57,7 +56,7 @@ namespace ENCT.Utilities
     /// <returns>A string with with hexadecimal values converted from a byte array.</returns>
     public static string ByteArrayToHexString(byte[] bytes)
     {
-      StringBuilder builder = new StringBuilder();
+      var builder = new StringBuilder();
       for (int i = 0; i < bytes.Length; i++)
       {
         builder.Append(bytes[i].ToString("x2"));

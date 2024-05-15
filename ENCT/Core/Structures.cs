@@ -1,5 +1,3 @@
-using System;
-
 namespace ENCT.Structures
 {
   /// <summary>
@@ -15,12 +13,36 @@ namespace ENCT.Structures
     /// <summary>
     /// The file version of the ENCT file.
     /// </summary>
-    public UInt16 FileVersion {get; set;}
+    public ushort FileVersion {get; set;}
+
+    /// <summary>
+    /// The ENCT file creation date, formatted as YYYY-MM-DD.
+    /// </summary>
     public string CreationDate {get; set;}
+
+    /// <summary>
+    /// The ENCT file creation time, formatted as HH:MM:SS.
+    /// </summary>
     public string CreationTime {get; set;}
-    public UInt32 SourceFileContentSize {get; set;}
-    public UInt16 SourceFileType {get; set;}
+
+    /// <summary>
+    /// The source file contents size as bytes.
+    /// </summary>
+    public uint SourceFileContentSize {get; set;}
+
+    /// <summary>
+    /// The source file type.
+    /// </summary>
+    public ushort SourceFileType {get; set;}
+
+    /// <summary>
+    /// The initialization vector of the encryption used to encrypt the file.
+    /// </summary>
     public byte[] IV {get; set;}
+
+    /// <summary>
+    /// The source file hash.
+    /// </summary>
     public byte[] SourceFileHash {get; set;}
   }
 
@@ -34,11 +56,35 @@ namespace ENCT.Structures
     /// The file version of the ENCT file.
     /// </summary>
     public ushort FileVersion {get; set;}
+
+    /// <summary>
+    /// The ENCT file creation date, formatted as YYYY-MM-DD.
+    /// </summary>
     public string CreationDate {get; set;}
+
+    /// <summary>
+    /// The ENCT file creation time, formatted as HH:MM:SS.
+    /// </summary>
     public string CreationTime {get; set;}
+
+    /// <summary>
+    /// The source file contents size as bytes.
+    /// </summary>
     public uint SourceFileContentSize {get; set;}
+
+    /// <summary>
+    /// The source file type.
+    /// </summary>
     public ushort SourceFileType {get; set;}
+
+    /// <summary>
+    /// The initialization vector of the encryption used to encrypt the file.
+    /// </summary>
     public byte[] IV {get; set;}
+
+    /// <summary>
+    /// The source file hash.
+    /// </summary>
     public byte[] SourceFileHash {get; set;}
   }
 }
