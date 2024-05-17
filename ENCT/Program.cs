@@ -6,7 +6,7 @@ namespace ENCT
 {
   public class Program
   {
-    public static void Main(string[] args)
+    static void Main(string[] args)
     {
       Parser.Default.ParseArguments<EnctEncryptOptions, EnctDecryptOptions, EnctHeaderOptions>(args)
       .MapResult(

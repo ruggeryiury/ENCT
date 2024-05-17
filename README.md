@@ -34,7 +34,7 @@ Encrypt a text or JSON file.
 - `-i` `--input`: The source file to be encrypted.
 - `-k` `--key`: A 16 characters encryption key.
 
-```bat
+```sh
 enct.exe encrypt -i "file.txt" -k 101010101010
 ```
 
@@ -45,7 +45,7 @@ Decrypt a ENCT file.
 - `-i` `--input`: The ENCT file to be decrypted.
 - `-k` `--key`: A 16 characters encryption key.
 
-```bat
+```sh
 enct.exe decrypt -i "file.enct" -k 101010101010
 ```
 
@@ -55,7 +55,7 @@ Parses a ENCT file header.
 
 - `-i` `--input`: The ENCT file to parse its header.
 
-```bat
+```sh
 enct.exe header -i "file.enct"
 ```
 

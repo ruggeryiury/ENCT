@@ -70,24 +70,17 @@ namespace ENCT.Core
 
       byte[] enct = File.ReadAllBytes(srcPath);
 
-      ENCTParsedHeaderStruct header = EnctV1.ParseHeader(enct);
+      var header = EnctV1.ParseHeader(enct);
       byte[] encContents = EnctUtilities.ReadBytesAsSequence(enct, 0x50, enct.Length - 0x50);
       byte[] decryptedContents = EnctV1.DecryptV1(encContents, Encoding.ASCII.GetBytes(options.Key), header.IV);
       string destFilename = Path.GetFileNameWithoutExtension(srcPath);
-
-      string destExt;
-      switch (header.SourceFileType)
+      string destExt = header.SourceFileType switch
       {
-        case 1:
-          destExt = ".json";
-          break;
-        default:
-          destExt = ".txt";
-          break;
-      }
-
+        1 => ".json",
+        _ => ".txt",
+      };
       string newContents = JsonConvert.DeserializeObject<string>(Encoding.UTF8.GetString(decryptedContents));
-      using (StreamWriter sw = new StreamWriter($"{destFilename}{destExt}"))
+      using (var sw = new StreamWriter($"{destFilename}{destExt}"))
       {
         sw.Write(newContents);
       };
