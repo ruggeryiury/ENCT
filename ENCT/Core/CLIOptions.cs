@@ -5,7 +5,7 @@ namespace CLI.Options
   /// <summary>
   /// CLI Options for encrypt method.
   /// </summary>
-  [Verb("encrypt", HelpText = "Encrypt a text or JSON file.")]
+  [Verb("encrypt", HelpText = "Encrypts a .txt/.json file to ENCT.")]
   public class EnctEncryptOptions
   {
     /// <summary>
@@ -23,7 +23,7 @@ namespace CLI.Options
   /// <summary>
   /// CLI Options for decrypt method.
   /// </summary>
-  [Verb("decrypt", HelpText = "Decrypt a ENCT file.")]
+  [Verb("decrypt", HelpText = "Decrypts a ENCT file.")]
   public class EnctDecryptOptions
   {
     /// <summary>
@@ -34,7 +34,7 @@ namespace CLI.Options
     /// <summary>
     /// The user key to decrypt the file.
     /// </summary>
-    [Option('k', "key", Required = true, HelpText = "A 16 characters decryption key.")]
+    [Option('k', "key", Required = true, HelpText = "The 16 characters decryption key.")]
     public string Key { get; set; }
 
   }
@@ -42,7 +42,7 @@ namespace CLI.Options
   /// <summary>
   /// CLI Options for header method.
   /// </summary>
-  [Verb("header", HelpText = "Parses a ENCT file header")]
+  [Verb("header", HelpText = "Parses a ENCT file header and prints the header contents.")]
   public class EnctHeaderOptions
   {
     /// <summary>

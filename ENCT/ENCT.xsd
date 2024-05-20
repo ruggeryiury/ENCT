@@ -16,6 +16,9 @@
               <xs:element name="AssemblyName" type="xs:string" />
               <xs:element name="ApplicationIcon" type="xs:string" />
               <xs:element name="NoWin32Manifest" type="xs:string" />
+              <xs:element name="Copyright" type="xs:string" />
+              <xs:element name="Version" type="xs:string" />
+              <xs:element name="AssemblyTitle" type="xs:string" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
