@@ -46,9 +46,15 @@ namespace CLI.Options
   public class EnctHeaderOptions
   {
     /// <summary>
-    /// The ENCT file to parse its header.
+    /// The ENCT file path to parse its header.
     /// </summary>
-    [Option('i', "input", Required = true, HelpText = "The ENCT file to parse its header.")]
+    [Option('i', "input", Required = true, HelpText = "The ENCT file path to parse its header.")]
     public string Input { get; set; }
+
+    /// <summary>
+    /// Set output as a JSON object.
+    /// </summary>
+    [Option('j', "json", Required = false, HelpText = "Set output as a JSON object", Default = false)]
+    public bool AsJSON { get; set; }
   }
 }

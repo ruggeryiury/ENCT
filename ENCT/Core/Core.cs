@@ -96,6 +96,7 @@ namespace ENCT.Core
     public static int Header(EnctHeaderOptions options)
     {
       string srcPath = options.Input;
+      bool asJSON = options.AsJSON;
 
       if (!Path.Exists(srcPath))
       {
@@ -112,6 +113,12 @@ namespace ENCT.Core
           break;
         default:
           break;
+      }
+
+      if (asJSON)
+      {
+        Console.WriteLine(JsonConvert.SerializeObject(header, Formatting.None));
+        return 0;
       }
 
       Console.WriteLine($"Header from file \"{srcPath}\":\n");

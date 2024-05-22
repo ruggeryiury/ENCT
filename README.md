@@ -18,7 +18,6 @@
 - [File format specifications](#file-format-specifications)
   - [Header](#header-1)
 
-
 # About
 
 `ENCT` is a CLI program project that encrypts and decrypts text or JSON files to a proprietary file format using AES encryption.
@@ -54,6 +53,7 @@ enct.exe decrypt -i "file.enct" -k 101010101010
 Parses a ENCT file header.
 
 - `-i` `--input`: The ENCT file to parse its header.
+- `-j` `--json`: Set output as a JSON object.
 
 ```sh
 enct.exe header -i "file.enct"
@@ -65,18 +65,17 @@ enct.exe header -i "file.enct"
 
 An ENCT file has a fixed header of `0x50` bytes length.
 
-
-| NAME                  	| OFFSET 	| LENGTH 	| TYPE                  	| DESCRIPTION             	|
-|-----------------------	|--------	|--------	|-----------------------	|-------------------------	|
-| Magic                 	| `0x0`  	| `0x4`  	| ASCII `string`        	| Magic "ENCT"            	|
-| FileVersion           	| `0x4`  	| `0x2`  	| Unsigned 16-bit `int` 	| File version            	|
-| CreationDate          	| `0x6`  	| `0xA`  	| ASCII `string`        	| File creation date      	|
-| CreationTime          	| `0x10` 	| `0x8`  	| ASCII `string`        	| File creation time      	|
-| SourceFileContentSize 	| `0x18` 	| `0x4`  	| Unsigned 32-bit `int` 	| File content size       	|
-| SourceFileType        	| `0x1C` 	| `0x2`  	| Unsigned 16-bit `int` 	| Source file type        	|
-| Padding               	| `0x1E` 	| `0x2`  	| `byte[]`              	| File header padding     	|
-| IV                    	| `0x20` 	| `0x10` 	| `byte[]`              	| IV                      	|
-| SrcFileHash           	| `0x30` 	| `0x20` 	| `byte[]`              	| Source file SHA256 hash 	|
+| NAME                  | OFFSET | LENGTH | TYPE                  | DESCRIPTION             |
+| --------------------- | ------ | ------ | --------------------- | ----------------------- |
+| Magic                 | `0x0`  | `0x4`  | ASCII `string`        | Magic "ENCT"            |
+| FileVersion           | `0x4`  | `0x2`  | Unsigned 16-bit `int` | File version            |
+| CreationDate          | `0x6`  | `0xA`  | ASCII `string`        | File creation date      |
+| CreationTime          | `0x10` | `0x8`  | ASCII `string`        | File creation time      |
+| SourceFileContentSize | `0x18` | `0x4`  | Unsigned 32-bit `int` | File content size       |
+| SourceFileType        | `0x1C` | `0x2`  | Unsigned 16-bit `int` | Source file type        |
+| Padding               | `0x1E` | `0x2`  | `byte[]`              | File header padding     |
+| IV                    | `0x20` | `0x10` | `byte[]`              | IV                      |
+| SrcFileHash           | `0x30` | `0x20` | `byte[]`              | Source file SHA256 hash |
 
 - `Magic`: The file header magic (an ID identifier of the file) as an ASCII-encoded `string` of 4-bytes length. All ENCT files has the same 4-byte.
 
@@ -89,6 +88,7 @@ An ENCT file has a fixed header of `0x50` bytes length.
 - `SourceFileContentSize`: The source file content size.
 
 - `SourceFileType`: The source file type as a `byte`. Known values are:
+
   - `0x0` - `.txt` file.
   - `0x1` - `.json` file.
 
