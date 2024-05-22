@@ -75,7 +75,7 @@ namespace ENCT.Structures
     /// <summary>
     /// The source file type.
     /// </summary>
-    public ushort SourceFileType {get; set;}
+    public string SourceFileType {get; set;}
 
     /// <summary>
     /// The initialization vector of the encryption used to encrypt the file.

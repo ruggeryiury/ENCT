@@ -22,10 +22,7 @@ namespace ENCT.V1
       var mStream = new MemoryStream();
       var bw = new BinaryWriter(mStream);
       var now = DateTime.Now;
-      ushort srcFile;
-
-      if (srcExt == ".txt") srcFile = (ushort)0;
-      else srcFile = (ushort)1;
+      ushort srcFileType = EnctUtilities.GetSourceFileTypeByExt(srcExt);
 
       ENCTHeaderStruct header = new ENCTHeaderStruct
       {
@@ -34,7 +31,7 @@ namespace ENCT.V1
         CreationDate = now.ToString("yyyy-MM-dd"),
         CreationTime = now.ToString("HH:mm:ss"),
         SourceFileContentSize = (UInt32)srcContents.Length,
-        SourceFileType = srcFile,
+        SourceFileType = srcFileType,
         IV = swappedIV,
         SourceFileHash = srcHash
       };
@@ -51,18 +48,23 @@ namespace ENCT.V1
       return mStream.ToArray();
     }
 
+    /// <summary>
+    /// Returns a structure with all header values formatted.
+    /// </summary>
+    /// <param name="enct">The first 80 bytes of a ENCT file.</param>
+    /// <returns></returns>
     public static ENCTParsedHeaderStruct ParseHeader(byte[] enct)
     {
-      var header = new ENCTParsedHeaderStruct
+      var header = new ENCTParsedHeaderStruct()
       {
-        Magic = Encoding.ASCII.GetString(EnctUtilities.ReadBytesAsSequence(enct, 0x0, 0x4)),
-        FileVersion = BitConverter.ToUInt16(EnctUtilities.ReadBytesAsSequence(enct, 0x4, 0x2)),
-        CreationDate = Encoding.ASCII.GetString(EnctUtilities.ReadBytesAsSequence(enct, 0x6, 0xA)),
-        CreationTime = Encoding.ASCII.GetString(EnctUtilities.ReadBytesAsSequence(enct, 0x10, 0x8)),
-        SourceFileContentSize = BitConverter.ToUInt32(EnctUtilities.ReadBytesAsSequence(enct, 0x18, 0x4)),
-        SourceFileType = BitConverter.ToUInt16(EnctUtilities.ReadBytesAsSequence(enct, 0x1C, 0x2)),
+        Magic = Encoding.ASCII.GetString(enct, 0x00, 0x04),
+        FileVersion = BitConverter.ToUInt16(enct, 0x04),
+        CreationDate = Encoding.ASCII.GetString(enct, 0x06, 0x0A),
+        CreationTime = Encoding.ASCII.GetString(enct, 0x10, 0x08),
+        SourceFileContentSize = BitConverter.ToUInt32(enct, 0x18),
+        SourceFileType = EnctUtilities.GetSourceFileTypeByInt(BitConverter.ToUInt16(enct, 0x1C)),
         IV = EnctUtilities.SwapIVBytes(EnctUtilities.ReadBytesAsSequence(enct, 0x20, 0x10)),
-        SourceFileHash = EnctUtilities.ReadBytesAsSequence(enct, 0x30, 0x20),
+        SourceFileHash = EnctUtilities.ReadBytesAsSequence(enct, 0x30, 0x20)
       };
 
       return header;

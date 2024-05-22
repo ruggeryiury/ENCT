@@ -63,5 +63,38 @@ namespace ENCT.Utilities
       }
       return builder.ToString();
     }
+
+    /// <summary>
+    /// Returns a UInt16 representation of a source file extension.
+    /// </summary>
+    /// <param name="srcExt">The extension of the source file.</param>
+    /// <returns>A UInt16 representation of a source file extension.</returns>
+    public static ushort GetSourceFileTypeByExt(string srcExt)
+    {
+      ushort type = srcExt switch
+      {
+        ".json" => 1,
+        _ => 0
+      };
+
+      return type;
+    }
+
+    /// <summary>
+    /// Returns a string representation of a source file extension based on the ENCT source file type.
+    /// </summary>
+    /// <param name="srcFileType">A UInt16 value taken from the ENCT file header, representing the original file extension.</param>
+    /// <returns>A string representation of a source file extension based on the ENCT source file type.</returns>
+    public static string GetSourceFileTypeByInt(ushort srcFileType)
+    {
+      string type = srcFileType switch
+      {
+        1 => ".json",
+        _ => ".txt"
+      };
+
+      return type;
+    }
   }
+
 }

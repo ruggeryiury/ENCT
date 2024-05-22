@@ -63,7 +63,7 @@ enct.exe header -i "file.enct"
 
 ## Header
 
-An ENCT file has a fixed header of `0x50` bytes length.
+An ENCT file has a fixed header of `0x50` (80 bytes) length.
 
 | NAME                  | OFFSET | LENGTH | TYPE                  | DESCRIPTION             |
 | --------------------- | ------ | ------ | --------------------- | ----------------------- |
